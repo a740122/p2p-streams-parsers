@@ -57,7 +57,6 @@ def arenavision_streams(name,url):
 		if match: sop.sopstreams(name,os.path.join(current_dir,"icon.png"),"sop://" + match[0])
 		else:
 			match = re.compile('this.loadPlayer\("(.+?)"').findall(source)
-			xbmcgui.Dialog().ok("Event MAtch",str(match))
 			if match: ace.acestreams(name,os.path.join(current_dir,"icon.png"),match[0])
 			else: xbmcgui.Dialog().ok(translate(40000),translate(40022))
 
@@ -93,7 +92,7 @@ def arenavision_schedule(url):
 				sorted(canais, key=lambda score: canais[0], reverse=False)
 				for canal in canais:
 					for c in range(0,len(canal)-1):
-							event_channels.append("AV"+str(canal[c]) + " " + str(canal[len(canal)-1]))
+							event_channels.append("AV"+str(canal[c]) + " "  + '[B][COLOR yellow]' + str(canal[len(canal)-1]) + '[/B][/COLOR] ')
 				try: addDir('[B][COLOR red]' + time + '[/B][/COLOR] ' + '[B][COLOR green]' + removeNonAscii(clean(modalidade)) + '[/B][/COLOR] '+ removeNonAscii(clean(campeonato)) + " " + '[B][COLOR yellow]' + removeNonAscii(clean(evento)) + '[/B][/COLOR] ',str(event_channels),401,os.path.join(current_dir,"icon.png"),1,False,parser="arenavision",parserfunction="arenavision_chooser")
 				except:pass	
 		
