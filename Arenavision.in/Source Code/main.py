@@ -57,6 +57,7 @@ def arenavision_streams(name,url):
 		if match: sop.sopstreams(name,os.path.join(current_dir,"icon.png"),"sop://" + match[0])
 		else:
 			match = re.compile('this.loadPlayer\("(.+?)"').findall(source)
+			xbmcgui.Dialog().ok("Event MAtch",str(match))
 			if match: ace.acestreams(name,os.path.join(current_dir,"icon.png"),match[0])
 			else: xbmcgui.Dialog().ok(translate(40000),translate(40022))
 """
@@ -123,21 +124,43 @@ def arenavision_schedule(url):
 					time=convertido.strftime(fmt)
 				except:
 					time='N/A'
-				event_array = evento.split('/')
+				event_array = "AV1/AV2" #evento.split('/')
+				event_array=event_array.split('/')
+				#canais = re.findall('(\d+)-', event, re.DOTALL)
+				#canais2 = re.findall('\t(.*?) (.+?)<', event, re.DOTALL)
+				#canais3 = re.findall('>\n(.*?) (.+?)<', event, re.DOTALL)
+				#canais1 = re.findall('(.+?)-', canais, re.DOTALL)
+				#canais2 = re.compile('(\d+)-').findall(canais)
+				#canais2 = re.compile('-(\d+)').findall(event)
+				canais1 = re.findall('\n(\d+)-(.+?)-(.+?) (.+?)<', event, re.DOTALL)
+				canais2 = re.findall('\t(.+?) (.+?)<', event, re.DOTALL)
+				canais=canais1+canais2
+				xbmcgui.Dialog().ok("Event MAtch",str(canais))
+				#primario = str(primario).split(" ")
+				#canais=primario[0].split("-")
+				#for i in primario:
+				#	xbmcgui.Dialog().ok("Event MAtch",str(i))
+				#for c in range(0,len(canais)):
+				#	if "S" not in canais[c]:
+				#		canais[c]="AV"+canais[c]
+				#xbmcgui.Dialog().ok("Event MAtch",str(canais))
+				#event_array=canais
+				#xbmcgui.Dialog().ok("Event MAtch",str(canais))
 				event_name = ''
 				event_channels = []
-				#i = 1
-				#for parc in event_array:
-				#	if 'AV' in parc:
-				#		event_channels.append(parc)
+				i = 1
+				for parc in event_array:
+					if 'AV' in parc:
+						event_channels.append(parc)
+				#xbmcgui.Dialog().ok("Event MAtch",str(event_channels))
 				#xbmcgui.Dialog().ok("event_channels",str(event_channels))
-				try: addDir('[B][COLOR red]' + time + '[/B][/COLOR] ' + removeNonAscii(clean(modalidade))+ "-"+removeNonAscii(clean(campeonato)) + " " + removeNonAscii(clean(evento)),str(event_channels),401,os.path.join(current_dir,"icon.png"),1,False,parser="arenavision",parserfunction="arenavision_chooser")
+				try: addDir('[B][COLOR red]' + time + '[/B][/COLOR] ' + '[B][COLOR green]' + removeNonAscii(clean(modalidade)) + '[/B][/COLOR] '+ removeNonAscii(clean(campeonato)) + " " + '[B][COLOR yellow]' + removeNonAscii(clean(evento)) + '[/B][/COLOR] ',str(event_channels),401,os.path.join(current_dir,"icon.png"),1,False,parser="arenavision",parserfunction="arenavision_chooser")
 				except:pass	
 		
 def arenavision_chooser(url):
 	dictionary = eval(url)
 	index = xbmcgui.Dialog().select("On...", dictionary)
-	xbmcgui.Dialog().ok("Event MAtch",str(index))
+	#xbmcgui.Dialog().ok("Event MAtch",str(dictionary))
 	if index > -1:
 		headers = {
 			"Cookie" : "beget=begetok; has_js=1;"
