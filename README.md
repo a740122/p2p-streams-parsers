@@ -2,7 +2,7 @@
 
 #### Information
 
-- Official Link: bit.ly/p2pallparsers
+- Official Link: [bit.ly/p2pallparsers](bit.ly/p2pallparsers)
 - Current Version: 1.0.0
 
 #### How to Install
