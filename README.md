@@ -9,4 +9,4 @@
 
 #### Credits
 
-Credits to enen92 & fightnight who start this project. I am going to keep it up-to-date.
+Credits to enen92 & fightnight who started this project. I am going to keep it up-to-date.
