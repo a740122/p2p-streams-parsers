@@ -3,9 +3,26 @@
 #### Information
 
 - Official Link: [bit.ly/p2pallparsers](http://bit.ly/p2pallparsers)
+- Discussion Topic [Kodi Foruns](http://forum.kodi.tv/showthread.php?tid=286292)
 - Current Version: 1.0.0
 
 #### How to Install
+
+- Open Kodi
+- Select SYSTEM
+- Select Add-Ons
+- Select Install from zip file
+- Navigate to where you downloaded the zip in the first step and select plugin.video.p2p-streams-x.x.x.zip
+- Wait for Add-on enabled notification
+- Navigate back to your Home Screen
+- Select VIDEOS > Add-Ons
+- Highlight - DO NOT SELECT - p2p-streams
+- Open the Context Menu (C on your keyboard, right click, Menu button on your remote, Long Press on touch screen devices) & select Add-on settings
+- In Lists/Parsers select Run a python script
+- Type the following exactly - http://bit.ly/p2pallparsers & select Done
+- Select OK
+
+If you already use P2P-Streams, Go to Configuration, Delete all Parsers, Add parser with the new link, and then sync.
 
 #### Credits
 
