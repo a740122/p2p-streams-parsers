@@ -17,7 +17,7 @@ from peertopeerutils.directoryhandle import *
 import acestream as ace
 import sopcast as sop
 
-base_url = "http://rojadirecta.my.to/"
+base_url = "http://www.rojadirecta.me/"
 
 def module_tree(name,url,iconimage,mode,parser,parserfunction):
 	if not parserfunction: rojadirecta_events()

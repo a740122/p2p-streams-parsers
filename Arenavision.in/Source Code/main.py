@@ -22,7 +22,7 @@ from cleaner import *
 import operator
 
 
-base_url = "http://arenavision.in"
+base_url = "http://www.arenavision.in"
 
 def module_tree(name,url,iconimage,mode,parser,parserfunction):
 	if not parserfunction: arenavision_menu()
