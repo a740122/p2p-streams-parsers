@@ -17,8 +17,10 @@ from peertopeerutils.directoryhandle import *
 import acestream as ace
 import sopcast as sop
 from cleaner import *
+import operator
 
-base_url = "http://www.arenavision.in"
+
+base_url = "http://arenavision.in"
 
 def module_tree(name,url,iconimage,mode,parser,parserfunction):
 	if not parserfunction: arenavision_menu()
@@ -72,6 +74,7 @@ def arenavision_schedule(url):
 
 		for event in match:
 			eventmatch = re.compile('>(\d+)/(\d+)/(\d+)</td>\n<td class="auto-style3" style="width: 182px">(.+?):(.+?) CET</td>\n<td class="auto-style3" style="width: 188px">(.+?)</td>\n<td class="auto-style3" style="width: 283px">(.+?)</td>\n<td class="auto-style3" style="width: 685px">(.+?)<').findall(event)
+			iii=1
 			for dia,mes,year,hour,minute,modalidade,campeonato,evento in eventmatch:
 				try:
 					import datetime
@@ -84,16 +87,30 @@ def arenavision_schedule(url):
 					time=convertido.strftime(fmt)
 				except:
 					time='N/A'
-				canais1 = re.findall('\n(\d+)-(.+?)-(.+?) (.+?)<', event, re.DOTALL)
-				canais2 = re.findall('\t(\d+) (.+?)<', event, re.DOTALL)
-				canais3 = re.findall('\t(\d+)-(.+?) (.+?)<', event, re.DOTALL)
-				canais=canais1+canais2+canais3
+				c1=re.findall('style="width: 317px">(.+?)</td>', event, re.DOTALL)
+				c1=c1[0].split()
+				c1=[ x for x in c1 if "/>" not in x ]
+				for x in range(0,len(c1)):
+					if c1[x][0]=='[':
+						c1[x]=c1[x][0:4]+"]"
+				dic={}
+				dic["temp"]=[]
+				for x in c1:
+					if x[0]=='[':
+						if x not in dic:
+							dic[x] = dic.pop('temp')
+						else:
+							dic[x]=dic[x]+dic["temp"]
+						dic["temp"]=[]
+					else:
+						dic["temp"]=dic["temp"]+[x]
+				del(dic["temp"])
 				event_channels=[]
-				sorted(canais, key=lambda score: canais[0], reverse=False)
-				for canal in canais:
-					for c in range(0,len(canal)-1):
-							event_channels.append("AV"+str(canal[c]) + " "  + '[B][COLOR yellow]' + str(canal[len(canal)-1]) + '[/B][/COLOR] ')
-				try: addDir('[B][COLOR red]' + time + '[/B][/COLOR] ' + '[B][COLOR green]' + removeNonAscii(clean(modalidade)) + '[/B][/COLOR] '+ removeNonAscii(clean(campeonato)) + " " + '[B][COLOR yellow]' + removeNonAscii(clean(evento)) + '[/B][/COLOR] ',str(event_channels),401,os.path.join(current_dir,"icon.png"),1,False,parser="arenavision",parserfunction="arenavision_chooser")
+				for key in dic:
+					for canais in dic[key]:
+						for canal in canais.split("-"):
+							event_channels.append("AV"+str(canal) + " "  + '[B][COLOR yellow]' + str(key) + '[/B][/COLOR] ')
+				try: addDir('[B][COLOR red]' + time + '[/B][/COLOR] ' + '[B][COLOR green]' + removeNonAscii(clean(modalidade)) + '[/B][/COLOR] '+ '[B][COLOR yellow]' + removeNonAscii(clean(evento)) + '[/B][/COLOR] '+ removeNonAscii(clean(campeonato)),str(event_channels),401,os.path.join(current_dir,"icon.png"),1,False,parser="arenavision",parserfunction="arenavision_chooser")
 				except:pass	
 		
 def arenavision_chooser(url):
@@ -114,4 +131,3 @@ def arenavision_chooser(url):
 					arenavision_streams(name,base_url+link)
 					
 def removeNonAscii(s): return "".join(filter(lambda x: ord(x)<128, s))
-		
