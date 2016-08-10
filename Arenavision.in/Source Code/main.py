@@ -22,7 +22,7 @@ from cleaner import *
 import operator
 
 
-base_url = "http://www.arenavision.in"
+base_url = "http://www.arenavision.in/"
 
 def module_tree(name,url,iconimage,mode,parser,parserfunction):
 	if not parserfunction: arenavision_menu()
@@ -109,6 +109,7 @@ def arenavision_schedule(url):
 				del(dic["temp"])
 				event_channels=[]
 				cores=["green","orange","blue","white","pink","peru","red","gold","darkcyan"]
+				html_escape_table = {"&amp;": "&",'"': "&quot;","'": "&apos;",">": "&gt;","<": "&lt;"}
 				for key in dic:
 					for canais in dic[key]:
 						for canal in canais.split("-"):
@@ -116,6 +117,7 @@ def arenavision_schedule(url):
 							if str(canal)[0]=="S":
 								del(cores[0])
 					del(cores[0])
+				evento=evento.replace("&amp;", "&")
 				try: addDir('[B][COLOR red]' + time + '[/B][/COLOR] ' + '[B][COLOR green]' + removeNonAscii(clean(modalidade)) + '[/B][/COLOR] '+ '[B][COLOR yellow]' + removeNonAscii(clean(evento)) + '[/B][/COLOR] '+ removeNonAscii(clean(campeonato)),str(event_channels),401,os.path.join(current_dir,"icon.png"),1,False,parser="arenavision",parserfunction="arenavision_chooser")
 				except:pass	
 		
@@ -131,7 +133,8 @@ def arenavision_chooser(url):
 		except: source="";xbmcgui.Dialog().ok(translate(40000),translate(40128))
 		if source:
 			match = re.compile('leaf"><a href="(.+?)">(.+?)</a').findall(source)
-			dictionary[index]=dictionary[index].split(" ")[0]
+			dictionary[index]=re.sub('\[.*?]','',dictionary[index])
+			dictionary[index] = dictionary[index][:-1]
 			for link,name in match:
 				if (dictionary[index] == name) or (dictionary[index] == name.replace('AV','#')) or (dictionary[index] == name.replace('#','AV')) or (dictionary[index] == name.replace('ArenaVision ','AV')):
 					arenavision_streams(name,base_url+link)
