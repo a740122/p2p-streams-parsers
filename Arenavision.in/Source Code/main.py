@@ -5,6 +5,8 @@ This plugin is 3rd party and not part of p2p-streams addon
 
 Arenavision.in
 
+edited by manuelsousa7
+
 """
 import sys,os,requests
 current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -106,10 +108,14 @@ def arenavision_schedule(url):
 						dic["temp"]=dic["temp"]+[x]
 				del(dic["temp"])
 				event_channels=[]
+				cores=["green","orange","blue","white","pink","peru","red","gold","darkcyan"]
 				for key in dic:
 					for canais in dic[key]:
 						for canal in canais.split("-"):
-							event_channels.append("AV"+str(canal) + " "  + '[B][COLOR yellow]' + str(key) + '[/B][/COLOR] ')
+							event_channels.append('[B][COLOR '+cores[0]+']'+"AV"+str(canal) + "[/B][/COLOR] "  + '[B][COLOR yellow]' + str(key) + '[/B][/COLOR]')
+							if str(canal)[0]=="S":
+								del(cores[0])
+					del(cores[0])
 				try: addDir('[B][COLOR red]' + time + '[/B][/COLOR] ' + '[B][COLOR green]' + removeNonAscii(clean(modalidade)) + '[/B][/COLOR] '+ '[B][COLOR yellow]' + removeNonAscii(clean(evento)) + '[/B][/COLOR] '+ removeNonAscii(clean(campeonato)),str(event_channels),401,os.path.join(current_dir,"icon.png"),1,False,parser="arenavision",parserfunction="arenavision_chooser")
 				except:pass	
 		
