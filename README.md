@@ -3,7 +3,6 @@
 #### Information
 
 - Official Link: [bit.ly/p2pallparsers](http://bit.ly/p2pallparsers)
-- Discussion Topic [Kodi Foruns](http://forum.kodi.tv/showthread.php?tid=286293)
 - Current Version: 1.0.0
 
 #### How to Install
